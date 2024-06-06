@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation using jQuery</title>
+    <script src="jquery.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 130%;
+        }
+        .wrap {
+            width: 550px;
+            margin: 0 auto;
+        }
+        label {
+            width: 200px;
+            float: left;
+            position: relative;
+            top: 12px;
+        }
+        input {
+            width: 320px;
+            font-size: 25px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px 5px 12px 5px;
+            margin-bottom: 10px;
+        }
+        .formelement{
+            margin-bottom: 10px;
+        }
+        #submitbutton {
+            width: 130px;
+            margin-left: 200px;
+        }
+        #error {
+            color: red;
+            font-size: 30px;
+        }
+        #success {
+            color: green;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="error"></div>
+    <div id="success"></div>
+    <div class="wrap">
+        <div class="formelement">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        </div>
+        <div class="formelement">
+            <label for="contact">Contact:</label>
+            <input type="tel" id="contact" name="contact">
+        </div>
+        <div class="formelement">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="formelement">
+            <label for="cpassword">Confirm Password:</label>
+            <input type="password" id="cpassword" name="cpassword">
+        </div>
+        <input id="submitbutton" type="submit">
+    </div>
+    
+    <script>
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        $("#submitbutton").click(function(event) {
+            event.preventDefault();
+
+            var errmsg = "";
+            var misfeild = "";
+
+            $("#error").html("");
+            $("#success").html("");
+
+            if ($("#email").val() == "") {
+                misfeild += "<p>Email is empty</p>";
+            }
+
+            if ($("#contact").val() == "") {
+                misfeild += "<p>Contact is empty</p>";
+            }
+
+            if ($("#password").val() == "") {
+                misfeild += "<p>Password is empty</p>";
+            }
+
+            if (!isEmail($("#email").val())) {
+                errmsg += "<p>Email is not valid</p>";
+            }
+
+            if (!$.isNumeric($("#contact").val())) {
+                errmsg += "<p>Contact is not valid</p>";
+            }
+
+            if ($("#password").val() != $("#cpassword").val()) {
+                errmsg += "<p>Passwords don't match</p>";
+            }
+
+            if (errmsg == "" && misfeild == "") {
+                $("#success").html("You are registered");
+            } else {
+                $("#error").html(errmsg + misfeild);
+            }
+        });
+    </script>
+</body>
+</html>
